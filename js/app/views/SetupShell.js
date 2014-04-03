@@ -46,7 +46,7 @@ define(function (require) {
                 
                 
                 if(window.location.hash==="#map"){
-                    that.options.body.find('#main-content').css('min-height', '950px'); 
+                    that.options.body.find('#main-content').css('min-height', '980px'); 
                 }
                 if (that.options.body.hasClass('left-nav')) {
 
@@ -78,7 +78,7 @@ define(function (require) {
             this.options.body.find("div#side-nav-cont a").click( function() {
 
                 if(window.location.hash==="#map"){
-                    that.options.body.find('#main-content').css('min-height', '950px'); 
+                    that.options.body.find('#main-content').css('min-height', '980px'); 
                 }
 
               $( this ).parent().parent().parent().find('li').each(function(){
