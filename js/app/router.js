@@ -112,7 +112,9 @@ define(function (require) {
                     }
                 }
    
-  
+                alert('options.url are');
+                alert(options.url);
+   
            });
 
 
@@ -688,6 +690,61 @@ define(function (require) {
             require(["app/views/Contact"], function (Contact) { 
                 Useful.correctView(that.body);
                 slider.slidePage(new Contact().$el);               
+             });
+        },
+                
+                
+        getMultipleNotification: function () {
+            
+            require(["app/models/devicenotification", "app/views/MultipleNotifications"], function (model, MultipleNotifications) {
+                
+                  if(typeof(deviceNotificationModel)==='undefined' || deviceNotificationModel===null){
+                        Useful.showSpinner();
+                        
+                        if(in_browser===true){
+                            that.device_id = test_device_id;
+                            that.api_key = test_api_key;
+                        }
+ 
+                        if(typeof(that.device_id)==='undefined' || that.device_id===null){
+                            that.setDeviceDetails();
+                        }
+                        
+                        deviceNotificationModel = new model.DeviceNotification({id:that.device_id});
+                        //deviceNotificationModel = new model.DeviceNotification({id:150});
+
+
+                        if(typeof(that.device_id)==='undefined' || that.device_id===null || typeof(that.api_key)==='undefined' || that.api_key===null){
+                            Useful.hideSpinner();
+                            Useful.correctView(that.body);
+                            Useful.showAlert('Could not get notification settings, please try again later', 'Problem');
+                            window.location.hash = "news";
+                        }
+                        else{   
+                            deviceNotificationModel.fetch({
+                                api: true,
+                                headers: {device_id:that.device_id,api_key:that.api_key},        
+                                success: function (data) {
+                                    Useful.correctView(that.body);
+                                    slider.slidePage(new MultipleNotifications({model: data
+                                                                        }).$el);   
+                                    Useful.hideSpinner();
+                                },
+                                error:function(model, xhr, options){    
+                                    Useful.correctView(that.body);
+                                    Useful.hideSpinner();
+                                    Useful.checkNetwork(slider);                  
+                                }
+                            });
+                        }
+                    
+                  }else{    
+                        Useful.correctView(that.body);
+                        slider.slidePage(new Notification({model: deviceNotificationModel
+                                                            }).$el);    
+                  }
+
+       
              });
         },
                 

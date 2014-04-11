@@ -5,7 +5,7 @@
 
     var project_title = "cbsthurles", 
         project_number = "900918694951", 
-        push_server_url = "http://push.schoolspace.ie", 
+        push_server_url = "http://192.168.1.29", 
         standard_device_id = "63843", 
         standard_api_key = "hv7Vgd4jsbb",
         school_name = "CBS Thurles",
